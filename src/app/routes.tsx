@@ -2,7 +2,7 @@ import React from 'react';
 import {Navigate, Outlet, Route, Routes} from 'react-router-dom';
 import {AuthGuard} from "../components/auth-guard";
 import {Login} from "../pages/login";
-import {Header} from "../components/header";
+import {Layout} from "../components/layout";
 import {News} from "../pages/news";
 
 export const AppRoutes = () => {
@@ -12,8 +12,9 @@ export const AppRoutes = () => {
         path="/"
         element={
           <AuthGuard privateFallback={<Login />}>
-            <Header />
-            <Outlet />
+            <Layout>
+              <Outlet />
+            </Layout>
           </AuthGuard>
         }
       >

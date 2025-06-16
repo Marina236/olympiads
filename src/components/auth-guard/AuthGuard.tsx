@@ -9,7 +9,7 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
   children,
   privateFallback,
 }) => {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   if (!isAuthenticated) {
     return <>{privateFallback}</>;
