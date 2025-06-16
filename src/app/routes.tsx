@@ -3,7 +3,7 @@ import {Navigate, Outlet, Route, Routes} from 'react-router-dom';
 import {AuthGuard} from "../components/auth-guard";
 import {Login} from "../pages/login";
 import {Layout} from "../components/layout";
-import {News} from "../pages/news";
+import {News} from "../pages/news/News";
 
 export const AppRoutes = () => {
   return (

@@ -14,7 +14,7 @@ export const Layout = ({children}: LayoutProps) => {
         <Header />
       </Box>
 
-      <Flex flexGrow={1} h={`calc(100vh - 50px)`} maxH={`calc(100vh - 50px)`}>
+      <Flex flexGrow={1} h={`calc(100vh - 50px)`} maxH={`calc(100vh - 50px)`} padding="20px" overflow="auto">
         <Box
           as="main"
           marginTop={3}
@@ -22,7 +22,6 @@ export const Layout = ({children}: LayoutProps) => {
           alignSelf="stretch"
           flexGrow={1}
           flex={4}
-          overflow="hidden"
         >
           {children}
         </Box>
