@@ -10,7 +10,7 @@ export const Header = () => {
       as="header"
       alignItems="center"
       justifyContent="space-between"
-      bg="#4f99b7"
+      bg="#cbdbff"
       px={10}
       py={2}
       h='50px'

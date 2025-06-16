@@ -1,4 +1,4 @@
-import {Card, Flex, Heading} from '@chakra-ui/react';
+import {Badge, Card, Flex, Grid, Heading, Stack, Text} from '@chakra-ui/react';
 import React from 'react';
 import {newsList} from "./news-list";
 
@@ -7,18 +7,23 @@ export const News = () => {
     <Flex direction="column">
       <Heading mb="10px">Новости</Heading>
 
-      <Flex gap="10px" wrap="wrap" justifyContent="space-between">
+      <Grid templateColumns="repeat(3, 1fr)" gap="20px">
         {newsList.map((item, index) => (
-          <Card.Root width="520px" variant='elevated' key={'news' + index}>
+          <Card.Root variant='elevated' key={'news' + index}>
             <Card.Body gap="2">
-              <Card.Title mb="2">{item.title}</Card.Title>
-              <Card.Description>
-                {item.description}
-              </Card.Description>
+              <Text fontSize="16px">{item.date}</Text>
+              <Card.Title mb="1">{item.title}</Card.Title>
+              <Text fontSize="16px">{item.description}</Text>
+              <Text fontSize="12px" color="#52525b">{item.requirements}</Text>
+              <Stack direction="row">
+                {item.tag.map((tag, index) => (
+                  <Badge colorPalette="purple" key={'tag' + index}>{tag}</Badge>
+                ))}
+              </Stack>
             </Card.Body>
           </Card.Root>
         ))}
-      </Flex>
+      </Grid>
 
     </Flex>
   );
