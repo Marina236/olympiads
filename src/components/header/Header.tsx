@@ -1,13 +1,38 @@
 import React from 'react';
 import {Avatar, Box, Button, Flex, Menu, Portal, Text} from "@chakra-ui/react";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {$profile, logout} from "../user/model";
 import {useUnit} from "effector-react";
 import './Header.css';
 
 export const Header = () => {
+  const {pathname} = useLocation();
   const navigate = useNavigate();
   const profile = useUnit($profile);
+  const isActive = (name: string) => pathname === name;
+
+  const navigateMenu = [
+    {
+      name: 'Личный кабинет',
+      path: '/my',
+      visibleRoles: ['student']
+    },
+    {
+      name: 'Мой ребёнок',
+      path: '/my-child',
+      visibleRoles: ['parent']
+    },
+    {
+      name: 'Рейтинг классов',
+      path: '/class-rating',
+      visibleRoles: ['teacher']
+    },
+    {
+      name: 'Новости',
+      path: '/news',
+      visibleRoles: ['teacher', 'parent', 'student']
+    },
+  ]
 
   return (
     <Flex
@@ -20,16 +45,11 @@ export const Header = () => {
       h='50px'
     >
       <Flex gap={4} alignItems="center">
-        {profile?.role === 'student' && (
-          <Button className="navigate" onClick={() => navigate('/my')}>Личный кабинет</Button>
-        )}
-        {profile?.role === 'parent' && (
-          <Button className="navigate" onClick={() => navigate('/my-child')}>Мой ребёнок</Button>
-        )}
-        {profile?.role === 'teacher' && (
-          <Button className="navigate" onClick={() => navigate('/class-rating')}>Рейтинг классов</Button>
-        )}
-        <Button className="navigate" onClick={() => navigate('/news')}>Новости</Button>
+        {navigateMenu.filter(menu => menu.visibleRoles.includes(profile?.role || ''))
+            .map((menu) => (
+            <Button className={isActive(menu.path) ? 'navigate-active' : 'navigate'}
+                    onClick={() => navigate(menu.path)}>{menu.name}</Button>
+        ))}
       </Flex>
 
       <Menu.Root>

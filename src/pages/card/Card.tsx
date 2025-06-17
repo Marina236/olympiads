@@ -2,13 +2,14 @@ import {Flex, Grid, GridItem, Heading, Text, Card as CardChakra, Avatar, Table} 
 import React from 'react';
 import {awards} from "./awards";
 import {history} from "./history";
+import Moment from 'moment';
 
 export const Card = () => {
 
   return (
       <Flex direction="column">
           <Heading fontSize="24px" mb="10px">Смирнов Егор Сергеевич (11А)</Heading>
-          <Text>Всего наград: 3 (🥇1 🥈1 📜1)</Text>
+          <Text mb="20px">Всего наград: 3 (🥇1 🥈1 📜1)</Text>
           <Grid templateColumns="repeat(3, 1fr)" gap="6">
             <GridItem colSpan={1}>
               <Heading mb="10px">Список наград</Heading>
@@ -50,7 +51,7 @@ export const Card = () => {
                             {history.map((item) => (
                                 <Table.Row key={item.olympiadId}>
                                     <Table.Cell>{item.olympiadName}</Table.Cell>
-                                    <Table.Cell>{item.date}</Table.Cell>
+                                    <Table.Cell>{Moment(item.date).format('DD.MM.YYYY')}</Table.Cell>
                                     <Table.Cell>{item.points}/{item.maxPoints}</Table.Cell>
                                     <Table.Cell>{item.status}</Table.Cell>
                                     <Table.Cell>{item.award}</Table.Cell>

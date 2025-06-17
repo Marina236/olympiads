@@ -1,6 +1,7 @@
 import {Badge, Card, Flex, Grid, Heading, Stack, Text} from '@chakra-ui/react';
 import React from 'react';
 import {newsList} from "./news-list";
+import Moment from "moment/moment";
 
 export const News = () => {
   return (
@@ -11,7 +12,7 @@ export const News = () => {
         {newsList.map((item, index) => (
           <Card.Root variant='elevated' key={'news' + index}>
             <Card.Body gap="2">
-              <Text fontSize="16px">{item.date}</Text>
+              <Text fontSize="16px">{Moment(item.date).format('DD.MM.YYYY')}</Text>
               <Card.Title mb="1">{item.title}</Card.Title>
               <Text fontSize="16px">{item.description}</Text>
               <Text fontSize="12px" color="#52525b">{item.requirements}</Text>
