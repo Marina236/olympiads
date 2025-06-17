@@ -7,10 +7,11 @@ export const Card = () => {
 
   return (
       <Flex direction="column">
-          <Heading fontSize="24px" mb="10px">Смирнов Егор Сергеевич</Heading>
+          <Heading fontSize="24px" mb="10px">Смирнов Егор Сергеевич (11А)</Heading>
+          <Text>Всего наград: 3 (🥇1 🥈1 📜1)</Text>
           <Grid templateColumns="repeat(3, 1fr)" gap="6">
             <GridItem colSpan={1}>
-              <Heading mb="10px">Список достижений</Heading>
+              <Heading mb="10px">Список наград</Heading>
               <Flex gap="10px" direction="column">
                 {awards.map((item, index) => (
                   <CardChakra.Root variant='elevated' key={'award' + index}>
@@ -31,7 +32,7 @@ export const Card = () => {
               </Flex>
             </GridItem>
             <GridItem colSpan={2}>
-              <Heading mb="10px">История оценок</Heading>
+              <Heading mb="10px">История участия</Heading>
 
                 <Table.ScrollArea borderWidth="1px" rounded="md">
                     <Table.Root size="sm" stickyHeader>
