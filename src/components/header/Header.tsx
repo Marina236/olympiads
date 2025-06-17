@@ -32,7 +32,20 @@ export const Header = () => {
       path: '/news',
       visibleRoles: ['teacher', 'parent', 'student']
     },
-  ]
+  ];
+
+  const transformRole = (role: 'student' | 'teacher' | 'parent') => {
+    switch (role) {
+      case 'student':
+        return 'Ученик'
+      case 'teacher':
+        return 'Учитель'
+      case 'parent':
+        return 'Родитель'
+      default:
+        break;
+    }
+  }
 
   return (
     <Flex
@@ -62,7 +75,7 @@ export const Header = () => {
               <Flex align="center" gap={1}>
                 <Text fontSize="13px" color="#FFFFFF">{profile?.fio}</Text>
               </Flex>
-              <Text whiteSpace="pre-wrap" fontSize="12px" color="#FFFFFF">{profile?.role}</Text>
+              {profile?.role && <Text whiteSpace="pre-wrap" fontSize="12px" color="#FFFFFF">{transformRole(profile.role)}</Text>}
             </Flex>
           </Flex>
         </Menu.Trigger>
