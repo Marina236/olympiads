@@ -9,7 +9,7 @@ export type LayoutProps = {
 export const Layout = ({children}: LayoutProps) => {
 
   return (
-    <Flex flexDirection="column" minH="100vh" backgroundColor="background" overflow="hidden">
+    <Flex flexDirection="column" minH="100vh" backgroundColor="#EEEFF1" overflow="hidden">
       <Box position="sticky" top="0" zIndex={1}>
         <Header />
       </Box>
@@ -18,7 +18,6 @@ export const Layout = ({children}: LayoutProps) => {
         <Box
           as="main"
           marginTop={3}
-          backgroundColor="white"
           alignSelf="stretch"
           flexGrow={1}
           flex={4}
