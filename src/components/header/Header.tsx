@@ -20,7 +20,15 @@ export const Header = () => {
       h='50px'
     >
       <Flex gap={4} alignItems="center">
-        <Button className="navigate" onClick={() => navigate('/')}>Главная</Button>
+        {profile?.role === 'student' && (
+          <Button className="navigate" onClick={() => navigate('/my')}>Личный кабинет</Button>
+        )}
+        {profile?.role === 'parent' && (
+          <Button className="navigate" onClick={() => navigate('/my-child')}>Мой ребёнок</Button>
+        )}
+        {profile?.role === 'teacher' && (
+          <Button className="navigate" onClick={() => navigate('/class-rating')}>Рейтинг классов</Button>
+        )}
         <Button className="navigate" onClick={() => navigate('/news')}>Новости</Button>
       </Flex>
 

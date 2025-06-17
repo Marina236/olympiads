@@ -4,8 +4,14 @@ import {AuthGuard} from "../components/auth-guard";
 import {LoginForm} from "../pages/login";
 import {Layout} from "../components/layout";
 import {News} from "../pages/news/News";
+import {useUnit} from "effector-react";
+import {$profile} from "../components/user/model";
+import {Card} from "../pages/card";
+import {ClassRating} from "../pages/class-rating";
 
 export const AppRoutes = () => {
+  const profile = useUnit($profile);
+
   return (
     <Routes>
       <Route
@@ -18,8 +24,14 @@ export const AppRoutes = () => {
           </AuthGuard>
         }
       >
-        <Route index element={<>main page</>} />
-        <Route path="news" element={<News />} />
+        <Route index element={<></>} />
+
+        {profile?.role === 'teacher' && <Route path="class-rating" element={<ClassRating />} />}
+
+        {profile?.role === 'student' && <Route path="my" element={<Card />} />}
+        {profile?.role === 'parent' && <Route path="my-child" element={<Card />} />}
+
+         <Route path="news" element={<News />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Route>
     </Routes>
