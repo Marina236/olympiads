@@ -1,35 +1,68 @@
-import {Flex, Grid, GridItem, Heading, Text, Card as CardChakra, Avatar, Table} from "@chakra-ui/react"
+import {Flex, Grid, GridItem, Heading, Text, Card as CardChakra, Avatar, Table, Breadcrumb} from "@chakra-ui/react"
 import React from 'react';
-import {awards} from "./awards";
-import {history} from "./history";
 import Moment from 'moment';
+import {useNavigate, useParams} from "react-router-dom";
+import {rating} from "../../mocks/rating";
+import {useUnit} from "effector-react/compat";
+import {$profile} from "../../components/user/model";
 
 export const Card = () => {
+    const {id, childId} = useParams<{id: string; childId: string}>();
+    const role = useUnit($profile)?.role;
+    const navigate = useNavigate();
+
+    const classItem = rating.find(r => r.class === (id || '11А'));
+    const childItem = classItem?.students?.find(s => String(s.studentId) === (childId || '1012'));
+
+    if (!classItem  || !childItem) {
+      return <Text>Ученик не найден</Text>
+    }
 
   return (
       <Flex direction="column">
-          <Heading fontSize="24px" mb="10px">Смирнов Егор Сергеевич (11А)</Heading>
-          <Text mb="20px">Всего наград: 3 (🥇1 🥈1 📜1)</Text>
+          {role === 'teacher' ? (
+              <Breadcrumb.Root mb="10px">
+                  <Breadcrumb.List>
+                      <Breadcrumb.Item cursor="pointer" onClick={() => navigate(`/class-rating`)}>
+                          <Breadcrumb.Link>Рейтинг классов</Breadcrumb.Link>
+                      </Breadcrumb.Item>
+                      <Breadcrumb.Separator />
+                      <Breadcrumb.Item cursor="pointer" onClick={() => navigate(`/class-rating/${classItem.class}`)}>
+                          <Breadcrumb.Link>{classItem.class}</Breadcrumb.Link>
+                      </Breadcrumb.Item>
+                      <Breadcrumb.Separator />
+                      <Breadcrumb.Item>
+                          <Breadcrumb.Link>{childItem.fullName}</Breadcrumb.Link>
+                      </Breadcrumb.Item>
+                  </Breadcrumb.List>
+              </Breadcrumb.Root>
+          ) : null}
+          <Heading fontSize="24px" mb="10px">{childItem.fullName} ({classItem?.class})</Heading>
+          {/*<Text mb="20px">Всего наград: 3 (🥇1 🥈1 📜1)</Text>*/}
           <Grid templateColumns="repeat(3, 1fr)" gap="6">
             <GridItem colSpan={1}>
               <Heading mb="10px">Список наград</Heading>
               <Flex gap="10px" direction="column">
-                {awards.map((item, index) => (
-                  <CardChakra.Root variant='elevated' key={'award' + index}>
-                    <Flex padding="10px" direction="row" gap="1" alignItems="center" justifyContent="space-between">
-                      <Flex padding="10px" gap="1" direction="column">
-                        <CardChakra.Title>{item.title}</CardChakra.Title>
-                        <CardChakra.Description color="fg.muted">
-                          {item.description}
-                        </CardChakra.Description>
-                      </Flex>
-                      <Avatar.Root>
-                        <Avatar.Fallback name={item.type} />
-                        <Avatar.Image src={item.type} />
-                      </Avatar.Root>
-                    </Flex>
-                  </CardChakra.Root>
-                ))}
+                  {childItem?.awards?.length ? (
+                      <>
+                        {childItem?.awards?.map((item, index) => (
+                            <CardChakra.Root variant='elevated' key={'award' + index}>
+                                <Flex padding="10px" direction="row" gap="1" alignItems="center" justifyContent="space-between">
+                                    <Flex padding="10px" gap="1" direction="column">
+                                        <CardChakra.Title>{item.title}</CardChakra.Title>
+                                        <CardChakra.Description color="fg.muted">
+                                            {item.description}
+                                        </CardChakra.Description>
+                                    </Flex>
+                                    <Avatar.Root>
+                                        <Avatar.Fallback name={item.type} />
+                                        <Avatar.Image src={item.type} />
+                                    </Avatar.Root>
+                                </Flex>
+                            </CardChakra.Root>
+                        ))}
+                      </>
+                  ) : (<Text>Нет наград</Text>)}
               </Flex>
             </GridItem>
             <GridItem colSpan={2}>
@@ -48,7 +81,7 @@ export const Card = () => {
                         </Table.Header>
 
                         <Table.Body>
-                            {history.map((item) => (
+                            {childItem?.history?.map((item) => (
                                 <Table.Row key={item.olympiadId}>
                                     <Table.Cell>{item.olympiadName}</Table.Cell>
                                     <Table.Cell>{Moment(item.date).format('DD.MM.YYYY')}</Table.Cell>

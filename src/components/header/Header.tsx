@@ -9,7 +9,13 @@ export const Header = () => {
   const {pathname} = useLocation();
   const navigate = useNavigate();
   const profile = useUnit($profile);
-  const isActive = (name: string) => pathname === name;
+  const isActive = (name: string) =>
+      name === '/'
+          ? pathname === name
+          : pathname !== '/'
+              ? pathname.includes(name) ||
+              name.includes(pathname)
+              : false;
 
   const navigateMenu = [
     {
@@ -26,6 +32,11 @@ export const Header = () => {
       name: 'Рейтинг классов',
       path: '/class-rating',
       visibleRoles: ['teacher']
+    },
+    {
+      name: 'Рейтинг класса',
+      path: '/class-rating',
+      visibleRoles: ['parent', 'student']
     },
     {
       name: 'Новости',
