@@ -1,4 +1,4 @@
-import {Flex, Grid, GridItem, Heading, Text, Image, Card as CardChakra, Avatar, Table, Breadcrumb} from "@chakra-ui/react"
+import {Flex, Grid, GridItem, Heading, Text, Image, Card as CardChakra, Table, Breadcrumb} from "@chakra-ui/react"
 import React from 'react';
 import Moment from 'moment';
 import {useNavigate, useParams} from "react-router-dom";
@@ -82,11 +82,6 @@ export const Card = () => {
                                             objectFit="contain"
                                             rounded="100%"
                                         />
-
-                                        {/*<Avatar.Root>*/}
-                                        {/*    <Avatar.Fallback name={item.type}/>*/}
-                                        {/*    <Avatar.Image src={getImage(item.type)}/>*/}
-                                        {/*</Avatar.Root>*/}
                                     </Flex>
                                 </CardChakra.Root>
                             ))}
